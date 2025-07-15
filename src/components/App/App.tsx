@@ -36,6 +36,7 @@ export default function App() {
     try {
       const newMovie = await fetchMovies(value);
       setMovies(newMovie.results);
+
       if (newMovie.results.length === 0) {
         setIsNotFind();
       }
@@ -52,7 +53,7 @@ export default function App() {
       {isLoading && <Loader />}
       {isError && <ErrorMessage />}
       <Toaster />
-      {movies.length > 0 && <MovieList results={movies} onOpen={openModal} />}
+      {movies.length > 0 && <MovieList movies={movies} onSelect={openModal} />}
       {isModalOpen && selectedMovie && (
         <MovieModal movie={selectedMovie} onClose={closeModal} />
       )}

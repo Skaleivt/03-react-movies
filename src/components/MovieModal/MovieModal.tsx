@@ -1,9 +1,14 @@
 import { createPortal } from "react-dom";
 import css from "../MovieModal/MovieModal.module.css";
 import { useEffect } from "react";
-import type { ModalPops } from "../../types/movie";
+import type { Movie } from "../../types/movie";
 
-export default function MovieModal({ movie, onClose }: ModalPops) {
+export interface MovieModalProps {
+  movie: Movie;
+  onClose: () => void;
+}
+
+export default function MovieModal({ movie, onClose }: MovieModalProps) {
   const handleBackdropClick = (event: React.MouseEvent<HTMLDivElement>) => {
     if (event.target === event.currentTarget) {
       onClose();
@@ -22,17 +27,6 @@ export default function MovieModal({ movie, onClose }: ModalPops) {
     return () => {
       document.removeEventListener("keydown", handleKeyDown);
       document.body.style.overflow = "";
-    };
-  }, [onClose]);
-  useEffect(() => {
-    const handleKey = (event: KeyboardEvent) => {
-      if (event.key === "Escape") {
-        onClose();
-      }
-    };
-    document.addEventListener("keydown", handleKey);
-    return () => {
-      document.removeEventListener("keydown", handleKey);
     };
   }, [onClose]);
 
@@ -60,10 +54,10 @@ export default function MovieModal({ movie, onClose }: ModalPops) {
           <h2>{movie.title}</h2>
           <p>{movie.overview}</p>
           <p>
-            <strong>Release Date:</strong> movie_release_date
+            <strong>Release Date:</strong> {movie.release_date}
           </p>
           <p>
-            <strong>Rating:</strong> movie_vote_average/10
+            <strong>Rating:</strong> {movie.vote_average}/10
           </p>
         </div>
       </div>

@@ -1,18 +1,25 @@
 import axios from "axios";
 
-import type { MoviePops } from "../types/movie";
+import type { Movie } from "../types/movie";
 
+interface MovieSearchResponse {
+  results: Movie[];
+  total_results: number;
+  total_pages: number;
+  page: number;
+}
 axios.defaults.baseURL = "https://api.themoviedb.org/3";
 
-export default async function fetchMovies(query: string) {
+export default async function fetchMovies(
+  query: string
+): Promise<MovieSearchResponse> {
   const myKey = import.meta.env.VITE_API_KEY;
 
-  const response = await axios.get<MoviePops>(`/search/movie`, {
+  const response = await axios.get<MovieSearchResponse>(`/search/movie`, {
     headers: {
-      Authorization: `Bearer ${import.meta.env.VITE_API_KEY}`,
+      Authorization: `Bearer ${myKey}`,
     },
     params: {
-      api_key: myKey,
       query,
     },
   });
