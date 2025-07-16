@@ -3,11 +3,11 @@ import styles from "./App.module.css";
 import SearchBar from "../SearchBar/SearchBar";
 import fetchMovies from "../../services/movieService";
 import type { Movie } from "../../types/movie";
-import MovieList from "../MovieGrid/MovieGrid";
 import ErrorMessage from "../ErrorMessage/ErrorMessage";
 import toast, { Toaster } from "react-hot-toast";
 import Loader from "../Loader/Loader";
 import MovieModal from "../MovieModal/MovieModal";
+import MovieGrid from "../MovieGrid/MovieGrid";
 
 export default function App() {
   const [movies, setMovies] = useState<Movie[]>([]);
@@ -53,7 +53,7 @@ export default function App() {
       {isLoading && <Loader />}
       {isError && <ErrorMessage />}
       <Toaster />
-      {movies.length > 0 && <MovieList movies={movies} onSelect={openModal} />}
+      {movies.length > 0 && <MovieGrid movies={movies} onSelect={openModal} />}
       {isModalOpen && selectedMovie && (
         <MovieModal movie={selectedMovie} onClose={closeModal} />
       )}
